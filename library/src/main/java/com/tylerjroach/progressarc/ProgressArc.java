@@ -9,9 +9,11 @@ import android.graphics.RectF;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 
 import static android.graphics.Paint.Cap.ROUND;
 import static android.graphics.Paint.Style.STROKE;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 public class ProgressArc extends View {
 
@@ -67,10 +69,19 @@ public class ProgressArc extends View {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        boolean isWrapContent = getLayoutParams().height == WRAP_CONTENT;
         int width = MeasureSpec.getSize(widthMeasureSpec);
-        int height = MeasureSpec.getSize(heightMeasureSpec);
-        arcBounds.set(strokeWidth / 2f, strokeWidth / 2f, width - (strokeWidth / 2f), height - (strokeWidth / 2f));
+        int height = MeasureSpec.getSize(isWrapContent ? widthMeasureSpec, heightMeasureSpec);
+        arcBounds.set(strokeWidth / 2, strokeWidth / 2, width - (strokeWidth / 2), height - strokeWidth / 2);
+
+        if (getLayoutParams().height == ViewGroup.LayoutParams.WRAP_CONTENT) {
+            float radius = arcBounds.width() / 2;
+            double layoutHeight = radius * (1 - Math.cos(Math.toRadians(sweepAngle) / 2));
+            double strokeArcOffset = strokeWidth - ((sweepAngle - 180) / 180);
+            setMeasuredDimension(width, (int) Math.ceil(layoutHeight + strokeArcOffset));
+        } else {
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        }
     }
 
     @Override protected void onDraw(Canvas canvas) {
