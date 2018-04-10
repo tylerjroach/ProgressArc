@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.text.TextPaint;
 import android.text.TextUtils;
@@ -30,6 +31,7 @@ public class ProgressArc extends View {
     private int backgroundColor;
     private float progress;
     private String label;
+    private Drawable centerDrawable;
 
     public ProgressArc(Context context) {
         super(context);
@@ -59,6 +61,9 @@ public class ProgressArc extends View {
         backgroundColor = typedArray.getColor(R.styleable.ProgressArc_stroke_inactive_color, getResources().getColor(R.color.progressBarInactive));
         strokeColor = typedArray.getColor(R.styleable.ProgressArc_stroke_active_color, getResources().getColor(R.color.progressBarActive));
         sweepAngle = typedArray.getInteger(R.styleable.ProgressArc_sweep_angle, getResources().getInteger(R.integer.default_sweep_angle));
+        if (typedArray.hasValue(R.styleable.ProgressArc_centerDrawable)) {
+            centerDrawable = typedArray.getDrawable(R.styleable.ProgressArc_centerDrawable);
+        }
         int textSizeDimension = typedArray.getDimensionPixelSize(R.styleable.ProgressArc_textSize, getResources().getDimensionPixelSize(R.dimen.default_text_size));
         typedArray.recycle();
 
@@ -88,6 +93,7 @@ public class ProgressArc extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+
         arcPaint.setColor(backgroundColor);
         canvas.drawArc(arcBounds, startAngle, sweepAngle, false, arcPaint);
         arcPaint.setColor(strokeColor);
@@ -97,6 +103,10 @@ public class ProgressArc extends View {
             canvas.drawText(label, canvas.getWidth() / 2, canvas.getHeight() - strokeWidth * 1.5f, textPaint);
         }
 
+        if (centerDrawable != null) {
+            centerDrawable.setBounds(0, 0, canvas.getWidth(), (int) (canvas.getHeight() - strokeWidth * 1.5f));
+            centerDrawable.draw(canvas);
+        }
     }
 
     public float getProgress() {

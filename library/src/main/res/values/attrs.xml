@@ -6,5 +6,6 @@
         <attr name="sweep_angle" format="integer" />
         <attr name="textSize" format="dimension" />
         <attr name="stroke_inactive_color" format="color" />
+        <attr name="centerDrawable" format="reference" />
     </declare-styleable>
 </resources>
