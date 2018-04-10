@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ProgressArc</string>
+    <string name="points">POINTS</string>
 </resources>

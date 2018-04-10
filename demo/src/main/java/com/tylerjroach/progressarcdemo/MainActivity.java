@@ -7,9 +7,8 @@ import android.widget.SeekBar;
 import com.tylerjroach.progressarc.ProgressArc;
 
 public class MainActivity extends AppCompatActivity {
-
-    ProgressArc progressArc;
-    SeekBar seekBar;
+    private ProgressArc progressArc;
+    private SeekBar seekBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
