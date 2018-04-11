@@ -4,26 +4,65 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:layout_marginTop="16dp">
+    android:layout_marginTop="32dp"
+    android:layout_marginBottom="32dp"
+    tools:context=".MainActivity">
 
-    <com.tylerjroach.progressarc.ProgressArc
-        android:id="@+id/progressArc"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        app:stroke_width="12dp"
-        app:sweep_angle="270"
-        app:stroke_inactive_color="@color/progressBarInactive"
-        app:stroke_active_color="@color/colorPrimary"
-        android:layout_centerHorizontal="true"/>
-
-    <SeekBar
-        android:id="@+id/seekBar"
-        android:layout_width="200dp"
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_below="@id/progressArc"
         android:layout_centerHorizontal="true"
-        android:max="100"/>
+        >
+
+        <com.tylerjroach.progressarc.ProgressArc
+            android:id="@+id/progressArc"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            app:stroke_active_color="@color/colorPrimary"
+            app:stroke_inactive_color="@color/progressBarInactive"
+            app:stroke_width="12dp"
+            app:sweep_angle="270"
+            android:background="@color/materialGrey200"/>
+
+        <ImageView
+            android:id="@+id/innerView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/colorAccent"
+            app:layout_constraintLeft_toLeftOf="@id/progressArc"
+            app:layout_constraintTop_toTopOf="@id/progressArc" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Progress" />
+
+        <SeekBar
+            android:id="@+id/progressSeekBar"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sweep Angle" />
+
+        <SeekBar
+            android:id="@+id/sweepAngleSeekBar"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp" />
+
+    </LinearLayout>
 
 </RelativeLayout>
